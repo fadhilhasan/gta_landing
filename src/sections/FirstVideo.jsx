@@ -7,7 +7,7 @@ const FirstVideo = () => {
 
   useGSAP(() => {
     gsap.set(".first-vd-wrapper", {
-      marginTop: "-150vh",
+      marginTop: "-100dvh",
       opacity: 0,
     });
 
@@ -21,12 +21,12 @@ const FirstVideo = () => {
       },
     });
 
-    tl.to(".hero-section", { delay: 0.5, opacity: 0, ease: "power1.inOut" });
+    tl.to(".hero-section", { opacity: 0, duration: 0.5, ease: "power1.inOut" });
     tl.to(".first-vd-wrapper", {
       opacity: 1,
-      duration: 2,
+      duration: 0.5,
       ease: "power1.inOut",
-    });
+    }, "<");
 
     videoRef.current.onloadedmetadata = () => {
       tl.to(
@@ -34,7 +34,7 @@ const FirstVideo = () => {
         {
           currentTime: videoRef.current.duration,
           duration: 3,
-          ease: "power1.inOut",
+          ease: "none",
         },
         "<",
       );
@@ -51,7 +51,7 @@ const FirstVideo = () => {
           preload="auto"
           src="/videos/output1.mp4"
           className="first-vd"
-        ></video>
+        />
       </div>
     </section>
   );

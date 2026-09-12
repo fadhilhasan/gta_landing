@@ -107,6 +107,24 @@ main {
       @apply mt-40 md:mt-60 2xl:mt-44 3xl:top-48;
     }
   }
+  .text-reveal {
+    @apply absolute inset-0 z-30 w-full h-dvh flex justify-center px-6 py-16 md:px-16 invisible;
+
+    .text-wrapper {
+      @apply w-full max-w-6xl space-y-6 my-auto shrink-0;
+      mask-repeat: no-repeat;
+      mask-size: 100% 100%;
+    }
+
+    h3.gradient-title {
+      font-size: clamp(2.5rem, 7vw, 7rem);
+      line-height: 1;
+    }
+
+    p.gradient-title {
+      @apply text-xl leading-relaxed md:text-3xl md:leading-relaxed;
+    }
+  }
   .jason {
     @apply relative z-10 lg:ps-40 2xl:ps-80 ps-10 py-40 mt-60 flex lg:flex-row flex-col justify-between gap-5 w-dvw overflow-x-hidden;
 

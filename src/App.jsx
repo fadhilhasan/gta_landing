@@ -8,6 +8,7 @@ import Hero from "./sections/Hero";
 import FirstVideo from "./sections/FirstVideo";
 import Jason from "./sections/Jason";
 import SecondVideo from "./sections/SecondVideo";
+import Lucia from "./sections/Lucia";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
@@ -16,7 +17,7 @@ const App = () => {
   useEffect(() => {
     const lenis = new Lenis({
       autoRaf: false,
-      lerp: 0.06,
+      lerp: 0.08,
       smoothWheel: true,
     });
 
@@ -43,6 +44,7 @@ const App = () => {
       <FirstVideo />
       <Jason />
       <SecondVideo />
+      <Lucia />
     </main>
   );
 };

@@ -41,7 +41,7 @@ const SecondVideo = () => {
       <div className="h-dvh">
         <video
           ref={videoRef}
-          src="/videos/output2.mp4"
+          src="/videos/output2-1.mp4"
           muted
           playsInline
           preload="auto"

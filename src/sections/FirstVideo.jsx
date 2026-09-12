@@ -22,11 +22,15 @@ const FirstVideo = () => {
     });
 
     tl.to(".hero-section", { opacity: 0, duration: 0.5, ease: "power1.inOut" });
-    tl.to(".first-vd-wrapper", {
-      opacity: 1,
-      duration: 0.5,
-      ease: "power1.inOut",
-    }, "<");
+    tl.to(
+      ".first-vd-wrapper",
+      {
+        opacity: 1,
+        duration: 0.5,
+        ease: "power1.inOut",
+      },
+      "<",
+    );
 
     videoRef.current.onloadedmetadata = () => {
       tl.to(
@@ -49,7 +53,7 @@ const FirstVideo = () => {
           muted
           playsInline
           preload="auto"
-          src="/videos/output1.mp4"
+          src="/videos/output1-1.mp4"
           className="first-vd"
         />
       </div>

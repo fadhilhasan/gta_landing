@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import Navbar from "./sections/Navbar";
@@ -6,8 +9,32 @@ import FirstVideo from "./sections/FirstVideo";
 import Jason from "./sections/Jason";
 
 gsap.registerPlugin(ScrollTrigger);
+gsap.ticker.lagSmoothing(0);
 
 const App = () => {
+  useEffect(() => {
+    const lenis = new Lenis({
+      autoRaf: false,
+      lerp: 0.08,
+      smoothWheel: true,
+    });
+
+    const updateScroll = (time) => lenis.raf(time * 1000);
+    const resizeScroll = () => lenis.resize();
+
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(updateScroll);
+    ScrollTrigger.addEventListener("refresh", resizeScroll);
+    ScrollTrigger.refresh();
+
+    return () => {
+      gsap.ticker.remove(updateScroll);
+      ScrollTrigger.removeEventListener("refresh", resizeScroll);
+      lenis.off("scroll", ScrollTrigger.update);
+      lenis.destroy();
+    };
+  }, []);
+
   return (
     <main>
       <Navbar />

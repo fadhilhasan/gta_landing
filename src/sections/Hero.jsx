@@ -88,7 +88,7 @@ const Hero = () => {
       .set(".text-reveal", { autoAlpha: 1 })
       .to(".text-reveal .text-wrapper", {
         maskImage:
-          "radial-gradient(circle at 50% 0%, black 100%, transparent 150%)",
+          "radial-gradient(circle at 50% 0%, black 50%, transparent 150%)",
         duration: 1,
         ease: "power1.inOut",
       })

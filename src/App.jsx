@@ -9,6 +9,7 @@ import FirstVideo from "./sections/FirstVideo";
 import Jason from "./sections/Jason";
 import SecondVideo from "./sections/SecondVideo";
 import Lucia from "./sections/Lucia";
+import PostCard from "./sections/PostCard";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
@@ -45,6 +46,7 @@ const App = () => {
       <Jason />
       <SecondVideo />
       <Lucia />
+      <PostCard />
     </main>
   );
 };

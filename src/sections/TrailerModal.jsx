@@ -27,13 +27,19 @@ const videos = [
 
 const TrailerModal = ({ onClose }) => {
   const dialogRef = useRef(null);
+  const panelRef = useRef(null);
   const playerRef = useRef(null);
   const [activeVideo, setActiveVideo] = useState(videos[2]);
 
   const selectVideo = (video) => {
     if (video.id === activeVideo.id) return;
     setActiveVideo(video);
-    dialogRef.current.scrollTo({ top: 0, behavior: "instant" });
+    panelRef.current.scrollTo({
+      top: 0,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
     playerRef.current.focus({ preventScroll: true });
   };
 
@@ -88,7 +94,7 @@ const TrailerModal = ({ onClose }) => {
           />
         </svg>
       </button>
-      <article className="trailer-panel">
+      <article ref={panelRef} className="trailer-panel" data-lenis-prevent>
         <iframe
           ref={playerRef}
           className="trailer-player"

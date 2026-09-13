@@ -5,7 +5,7 @@ const TextReveal = () => {
         <h3 className="gradient-title text-left! normal-case!">
           Vice City, USA.
         </h3>
-        <p className="gradient-title text-left! normal-case! text-[2.5rem]! leading-none!">
+        <p className="gradient-title text-left! normal-case! md:text-[2.5rem]! leading-none!">
           Jason and Lucia have always known the deck is stacked against them.
           But when an easy core goes wrong, they find themselves on the darkest
           side of the sunniest place in America, in the middle of a criminal

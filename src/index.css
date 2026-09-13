@@ -80,10 +80,10 @@ main {
     }
 
     .scale-out {
-      @apply object-cover md:scale-125 h-full;
+      @apply object-cover object-center md:scale-125 size-full;
     }
     .title-logo {
-      @apply absolute h-full md:scale-125 top-0 object-cover;
+      @apply absolute size-full md:scale-125 inset-0 object-cover object-center;
     }
     .trailer-logo {
       @apply absolute -bottom-5 w-48 left-1/2 -translate-x-1/2;
@@ -313,7 +313,7 @@ main {
   border: 0;
   background: transparent;
   color: #d5d0ed;
-  overflow-y: auto;
+  overflow: hidden;
   overscroll-behavior: contain;
 }
 
@@ -323,7 +323,12 @@ main {
 
 .trailer-panel {
   width: 100%;
-  overflow: hidden;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #575178 #19182e;
   border-radius: 12px;
   background: #19182e;
 }

@@ -4,9 +4,23 @@ import { useGSAP } from "@gsap/react";
 import { useMaskSettings } from "../../constants";
 import ComingSoon from "./ComingSoon";
 import TextReveal from "./TextReveal";
+import { useRef } from "react";
 
 const Hero = () => {
+  const buttonRef = useRef(null);
   const { initialMaskPos, initialMaskSize, maskSize } = useMaskSettings();
+
+  const animateHover = (isHovered) => {
+    gsap.to(buttonRef.current, {
+      scale: isHovered ? 1.05 : 1,
+      duration: 0.6,
+      boxShadow: isHovered
+        ? "0px 0px 30px 8px rgba(255, 255, 255, 0.7)"
+        : "0px 0px 0px 0px rgba(255, 255, 255, 0)",
+      ease: "power2.out",
+      overwrite: "auto",
+    });
+  };
 
   useGSAP(() => {
     gsap.set(".mask-wrapper", {
@@ -41,7 +55,7 @@ const Hero = () => {
     });
 
     tl.to(".fade-out", {
-      opacity: 0,
+      autoAlpha: 0,
       ease: "power1.inOut",
     })
       .to(".scale-out", { scale: 1, ease: "power1.inOut" })
@@ -107,7 +121,11 @@ const Hero = () => {
     const getOverflow = () =>
       Math.max(0, content.offsetHeight - section.clientHeight + 128);
     if (getOverflow() > 0) {
-      tl.to(content, { y: () => -getOverflow(), duration: 0.5, ease: "none" });
+      tl.to(content, {
+        y: () => -getOverflow(),
+        duration: 0.5,
+        ease: "none",
+      });
     }
   });
 
@@ -129,9 +147,16 @@ const Hero = () => {
           alt="trailer"
           className="trailer-logo fade-out"
         />
-        <div className="play-img fade-out">
-          <img src="/images/play.png" alt="play" className="w-7 ml-1" />
-        </div>
+        <button
+          ref={buttonRef}
+          onMouseEnter={() => animateHover(true)}
+          onMouseLeave={() => animateHover(false)}
+          type="button"
+          aria-label="watch trailer"
+          className="play-img fade-out cursor-pointer"
+        >
+          <img src="/images/play.png" alt="" className="w-7 ml-1" />
+        </button>
       </div>
 
       <div>

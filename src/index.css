@@ -72,6 +72,13 @@ main {
   .hero-section {
     @apply w-dvw h-dvh relative overflow-hidden;
 
+    .entrance-message,
+    .text-reveal,
+    .mask-logo,
+    .fake-logo-wrapper {
+      pointer-events: none;
+    }
+
     .scale-out {
       @apply object-cover md:scale-125 h-full;
     }

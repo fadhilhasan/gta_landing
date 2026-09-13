@@ -8,6 +8,7 @@ import Navbar from "./sections/Navbar";
 import Hero from "./sections/Hero";
 import FirstVideo from "./sections/FirstVideo";
 import Jason from "./sections/Jason";
+import MiddleVideo from "./sections/MiddleVideo";
 import SecondVideo from "./sections/SecondVideo";
 import Lucia from "./sections/Lucia";
 import PostCard from "./sections/PostCard";
@@ -56,6 +57,7 @@ const App = () => {
       <Hero onOpenTrailer={() => setTrailerOpen(true)} />
       <FirstVideo />
       <Jason />
+      <MiddleVideo />
       <SecondVideo />
       <Lucia />
       <PostCard />

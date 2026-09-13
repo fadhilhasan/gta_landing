@@ -6,7 +6,7 @@ import ComingSoon from "./ComingSoon";
 import TextReveal from "./TextReveal";
 import { useRef } from "react";
 
-const Hero = () => {
+const Hero = ({ onOpenTrailer }) => {
   const buttonRef = useRef(null);
   const { initialMaskPos, initialMaskSize, maskSize } = useMaskSettings();
 
@@ -149,6 +149,7 @@ const Hero = () => {
         />
         <button
           ref={buttonRef}
+          onClick={onOpenTrailer}
           onMouseEnter={() => animateHover(true)}
           onMouseLeave={() => animateHover(false)}
           type="button"

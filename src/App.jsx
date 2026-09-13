@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import TrailerModal from "./sections/TrailerModal";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import gsap from "gsap";
@@ -17,12 +18,15 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
 
 const App = () => {
+  const [trailerOpen, setTrailerOpen] = useState(false);
+  const lenisRef = useRef(null);
   useEffect(() => {
     const lenis = new Lenis({
       autoRaf: false,
       lerp: 0.08,
       smoothWheel: true,
     });
+    lenisRef.current = lenis;
 
     const updateScroll = (time) => lenis.raf(time * 1000);
     const resizeScroll = () => lenis.resize();
@@ -37,13 +41,19 @@ const App = () => {
       ScrollTrigger.removeEventListener("refresh", resizeScroll);
       lenis.off("scroll", ScrollTrigger.update);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    if (trailerOpen) lenisRef.current?.stop();
+    else lenisRef.current?.start();
+  }, [trailerOpen]);
 
   return (
     <main>
       <Navbar />
-      <Hero />
+      <Hero onOpenTrailer={() => setTrailerOpen(true)} />
       <FirstVideo />
       <Jason />
       <SecondVideo />
@@ -51,6 +61,7 @@ const App = () => {
       <PostCard />
       <Final />
       <Outro />
+      {trailerOpen && <TrailerModal onClose={() => setTrailerOpen(false)} />}
     </main>
   );
 };

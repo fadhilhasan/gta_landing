@@ -2,10 +2,25 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
-const PostCard = () => {
+const PostCard = ({ onExplore }) => {
   const videoRef = useRef(null);
 
   useGSAP(() => {
+    // Crossfade a viewport-sized background instead of scrolling a colored
+    // rectangle past Lucia. Fade back out as the final video enters.
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".post-card",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 0.3,
+        invalidateOnRefresh: true,
+      },
+    })
+      .to("main", { "--postcard-background-opacity": 1, duration: 1, ease: "none" })
+      .to("main", { "--postcard-background-opacity": 1, duration: 1, ease: "none" })
+      .to("main", { "--postcard-background-opacity": 0, duration: 1, ease: "none" });
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".post-card",
@@ -30,8 +45,6 @@ const PostCard = () => {
 
   return (
     <section className="post-card">
-      <div className="animated-gradient-bg" />
-
       <div className="post-card-wrapper group hover:rotate-1 hover:-[1.02] transition duration-700">
         <img src="/images/overlay.webp" alt="overlay" />
 
@@ -43,7 +56,7 @@ const PostCard = () => {
           src="/videos/postcard-vd.mp4"
         />
 
-        <button className="group-hover:bg-yellow transition duration-700">
+        <button type="button" onClick={onExplore} aria-haspopup="dialog" className="group-hover:bg-yellow transition duration-700 cursor-pointer">
           Explore Leonida Keys
         </button>
       </div>

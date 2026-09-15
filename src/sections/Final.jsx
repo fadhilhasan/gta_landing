@@ -34,17 +34,21 @@ const Final = () => {
       ease: "power1.inOut",
     });
 
-    videoRef.current.onloadedmetadata = () => {
+    const video = videoRef.current;
+    const setupVideo = () => {
       tl.to(
-        videoRef.current,
+        video,
         {
-          currentTime: videoRef.current.duration,
+          currentTime: video.duration,
           duration: 3,
-          ease: "power1.inOut",
+          ease: "none",
         },
         "<",
       );
     };
+    if (video.readyState >= 1) setupVideo();
+    else video.addEventListener("loadedmetadata", setupVideo, { once: true });
+    return () => video.removeEventListener("loadedmetadata", setupVideo);
   });
 
   return (

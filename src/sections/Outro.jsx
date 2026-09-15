@@ -1,9 +1,28 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { createPortal } from "react-dom";
 
 const Outro = () => {
   useGSAP(() => {
+    // The portal is fixed, so give it a scroll-bound visibility limit separate
+    // from the time-based entrance/reverse animation. Fast scrolling must not
+    // carry a still-fading outro back over the postcard.
+    const overlay = document.querySelector(".outro-overlay");
+    gsap.set(overlay, { opacity: 0 });
+    const setOverlayOpacity = gsap.quickSetter(overlay, "opacity");
+    const updateVisibility = (self) => {
+      const fadeDistance = Math.max(1, window.innerHeight * 0.2);
+      setOverlayOpacity(gsap.utils.clamp(0, 1, (self.scroll() - self.start) / fadeDistance));
+    };
+    ScrollTrigger.create({
+      trigger: ".final",
+      start: "top top",
+      end: "max",
+      onUpdate: updateVisibility,
+      onRefresh: updateVisibility,
+    });
+
     const stage = document.querySelector(".final-stage");
     if (stage) {
       gsap.set(stage, { y: 0 });
@@ -27,7 +46,7 @@ const Outro = () => {
         trigger: ".final-message",
         start: "top top",
         end: "+=80%",
-        scrub: 0.3,
+        toggleActions: "play none none reverse",
         pin: true,
         anticipatePin: 1,
         invalidateOnRefresh: true,
@@ -50,7 +69,7 @@ const Outro = () => {
           duration: 0.45,
           ease: "power1.inOut",
         },
-        0.15,
+        0,
       )
       .to(
         ".outro-content",
@@ -59,12 +78,15 @@ const Outro = () => {
           duration: 1,
           ease: "none",
         },
-        0.15,
+        0,
       );
   });
 
   return (
-    <section className="final-message">
+    <>
+      <section className="final-message" aria-hidden="true" />
+      {createPortal(
+      <div className="outro-overlay">
       <div className="outro-content h-full col-center gap-10">
         <img src="/images/logo.webp" alt="logo" className="md:w-72 w-52" />
 
@@ -83,7 +105,10 @@ const Outro = () => {
           <img src="/images/x-logo.svg" alt="x logo" className="md:w-52 w-40" />
         </div>
       </div>
-    </section>
+      </div>,
+      document.body,
+      )}
+    </>
   );
 };
 

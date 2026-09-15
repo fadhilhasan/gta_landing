@@ -1,31 +1,76 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Outro = () => {
   useGSAP(() => {
-    gsap.set(".final-message", { marginTop: "-100vh", opacity: 0 });
+    const stage = document.querySelector(".final-stage");
+    if (stage) {
+      gsap.set(stage, { y: 0 });
+      const setY = gsap.quickSetter(stage, "y", "px");
+      ScrollTrigger.create({
+        trigger: ".final-message",
+        start: "top top",
+        end: "+=80%",
+        onUpdate: (self) => setY(self.progress * (self.end - self.start)),
+        onRefresh: (self) => setY(self.progress * (self.end - self.start)),
+      });
+    }
+    gsap.set(".outro-content", {
+      autoAlpha: 0,
+      scale: 1.16,
+      transformOrigin: "50% 50%",
+    });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".final-message",
-        start: "top 30%",
-        end: "top 10%",
-        scrub: true,
+        start: "top top",
+        end: "+=80%",
+        scrub: 0.3,
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
       },
     });
 
-    tl.to(".final-content", { opacity: 0, duration: 1, ease: "power1.inOut" });
-    tl.to(".final-message", { opacity: 1, duration: 1, ease: "power1.inOut" });
+    tl.to(
+      ".final-content",
+      {
+        opacity: 0,
+        duration: 0.35,
+        ease: "power1.inOut",
+      },
+      0,
+    )
+      .to(
+        ".outro-content",
+        {
+          autoAlpha: 1,
+          duration: 0.45,
+          ease: "power1.inOut",
+        },
+        0.15,
+      )
+      .to(
+        ".outro-content",
+        {
+          scale: 0.9,
+          duration: 1,
+          ease: "none",
+        },
+        0.15,
+      );
   });
 
   return (
     <section className="final-message">
-      <div className="h-full col-center gap-10">
+      <div className="outro-content h-full col-center gap-10">
         <img src="/images/logo.webp" alt="logo" className="md:w-72 w-52" />
 
         <div>
           <h3 className="gradient-title">
-            Coming <br /> Nov 19th <br /> 2026
+            Coming <br /> November 19th <br /> 2026
           </h3>
         </div>
 

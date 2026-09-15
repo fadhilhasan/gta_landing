@@ -49,15 +49,17 @@ const Final = () => {
 
   return (
     <section className="final">
-      <div className="final-content size-full">
-        <video
-          ref={videoRef}
-          src="/videos/output3-1.mp4"
-          muted
-          playsInline
-          preload="auto"
-          className="size-full object-cover"
-        />
+      <div className="final-stage size-full">
+        <div className="final-content size-full">
+          <video
+            ref={videoRef}
+            src="/videos/output3-1.mp4"
+            muted
+            playsInline
+            preload="auto"
+            className="size-full object-cover"
+          />
+        </div>
       </div>
     </section>
   );

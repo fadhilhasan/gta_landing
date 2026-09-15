@@ -9,6 +9,7 @@ import Hero from "./sections/Hero";
 import FirstVideo from "./sections/FirstVideo";
 import Jason from "./sections/Jason";
 import MiddleVideo from "./sections/MiddleVideo";
+import JasonLife from "./sections/JasonLife";
 import SecondVideo from "./sections/SecondVideo";
 import Lucia from "./sections/Lucia";
 import PostCard from "./sections/PostCard";
@@ -58,6 +59,7 @@ const App = () => {
       <FirstVideo />
       <Jason />
       <MiddleVideo />
+      <JasonLife />
       <SecondVideo />
       <Lucia />
       <PostCard />

@@ -72,13 +72,15 @@ const MiddleVideo = () => {
       observer.observe(canvas);
 
       gsap.set(section, { opacity: 0 });
+      gsap.set(".middle-video-visual", { scale: 1.08 });
 
       gsap
         .timeline({
           scrollTrigger: {
+            id: "middle-video-sequence",
             trigger: section,
             start: "top top",
-            end: "+=150%",
+            end: "+=220%",
             scrub: 0.2,
             pin: true,
             anticipatePin: 1,
@@ -97,16 +99,16 @@ const MiddleVideo = () => {
           },
           0,
         )
-        .fromTo(
-          ".middle-video-quote",
-          { autoAlpha: 0, y: 30 },
-          { autoAlpha: 1, y: 0, duration: 0.2, ease: "power1.out" },
-          0.35,
+        .fromTo(".middle-video-quote",
+          { autoAlpha: 0, y: 100 },
+          { autoAlpha: 1, y: 0, duration: 0.25, ease: "power1.out" },
+          0.75,
         )
-        .to(
-          ".middle-video-quote",
-          { autoAlpha: 0, duration: 0.15, ease: "none" },
-          1.05,
+        .addLabel("quoteSettled", 1)
+        // Keep the video and quote still for a short stretch of scrolling.
+        .to(".middle-video-visual",
+          { scale: 1, duration: 0.35, ease: "none" },
+          "quoteSettled+=0.25",
         );
 
       return () => {
@@ -126,15 +128,19 @@ const MiddleVideo = () => {
       className="middle-video"
       aria-label="Jason in action"
     >
-      <canvas
-        ref={canvasRef}
-        className="block h-full w-full"
-        aria-hidden="true"
-      />
+      <div className="middle-video-stage">
+        <div className="middle-video-visual">
+          <canvas
+            ref={canvasRef}
+            className="block h-full w-full"
+            aria-hidden="true"
+          />
+        </div>
+      </div>
       <blockquote className="middle-video-quote">
-        “If anything happens,
-        <br />
-        I'm right behind you.”
+        <span className="middle-video-quote-content block">
+          “If anything happens,<br />I'm right behind you.”
+        </span>
       </blockquote>
     </section>
   );

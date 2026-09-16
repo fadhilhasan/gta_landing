@@ -23,17 +23,21 @@ const SecondVideo = () => {
 
     tl.to(".lucia", { opacity: 1, duration: 1, ease: "power1.inOut" });
 
-    videoRef.current.onloadedmetadata = () => {
+    const video = videoRef.current;
+    const setupVideo = () => {
       tl.to(
-        videoRef.current,
+        video,
         {
-          currentTime: videoRef.current.duration,
+          currentTime: video.duration,
           duration: 2,
           ease: "power1.inOut",
         },
         "<",
       );
     };
+    if (video.readyState >= 1) setupVideo();
+    else video.addEventListener("loadedmetadata", setupVideo, { once: true });
+    return () => video.removeEventListener("loadedmetadata", setupVideo);
   });
 
   return (

@@ -19,6 +19,11 @@ const previews = [
 function NavigationMenu({ onClose }) {
   const dialog = useRef(null);
   const close = useRef(null);
+  const onCloseRef = useRef(onClose);
+
+  useLayoutEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
   const [preview, setPreview] = useState(null);
   const [page, setPage] = useState("root");
   const [motion] = useState(
@@ -37,7 +42,7 @@ function NavigationMenu({ onClose }) {
     let destination;
     const context = gsap.context(() => {
       timeline = gsap.timeline({
-        onReverseComplete: () => onClose(destination),
+        onReverseComplete: () => onCloseRef.current(destination),
       });
       timeline
         .fromTo(
@@ -91,7 +96,7 @@ function NavigationMenu({ onClose }) {
       if (closing) return;
       closing = true;
       destination = target;
-      if (reduced || timeline.time() === 0) onClose(target);
+      if (reduced || timeline.time() === 0) onCloseRef.current(target);
       else timeline.reverse();
     };
     return () => {
@@ -101,7 +106,7 @@ function NavigationMenu({ onClose }) {
       document.documentElement.style.overflow = overflow;
       previousFocus?.focus({ preventScroll: true });
     };
-  }, []);
+  }, [motion]);
 
   return createPortal(
     <dialog

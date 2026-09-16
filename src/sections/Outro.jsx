@@ -44,9 +44,6 @@ const Outro = () => {
   }, []);
 
   useGSAP(() => {
-    // The portal is fixed, so give it a scroll-bound visibility limit separate
-    // from the time-based entrance/reverse animation. Fast scrolling must not
-    // carry a still-fading outro back over the postcard.
     const overlay = document.querySelector(".outro-overlay");
     const scene = document.querySelector(".outro-scene");
     gsap.set(scene, { opacity: 0 });
@@ -75,12 +72,10 @@ const Outro = () => {
         onRefresh: (self) => setY(self.progress * (self.end - self.start)),
       });
     }
-    // Once the pin ends, move the fixed artwork with the incoming footer.
     const setOverlayY = gsap.quickSetter(overlay, "y", "px");
     const footer = document.querySelector(".outro-footer");
     const platforms = document.querySelector(".outro-content").lastElementChild;
     const followFooter = () => {
-      // Use the visible artwork edge, not the full-height centering wrapper.
       const currentY = Number(gsap.getProperty(overlay, "y")) || 0;
       const artworkBottom = platforms.getBoundingClientRect().bottom - currentY;
       const gap = window.innerWidth < 768 ? 28 : 48;

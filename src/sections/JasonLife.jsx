@@ -16,8 +16,6 @@ const JasonLife = () => {
     () => {
       const stage = document.querySelector(".middle-video-stage");
       if (stage) {
-        // Once the sequence unpins, compensate for page movement. Only the
-        // background stays in the viewport; the quote and story scroll normally.
         const setY = gsap.quickSetter(stage, "y", "px");
         gsap.set(stage, { y: 0 });
         ScrollTrigger.create({
@@ -28,7 +26,6 @@ const JasonLife = () => {
           onRefresh: (self) => setY(self.progress * (self.end - self.start)),
         });
       }
-      // Fade the image only, so the quote stays readable as both sections scroll.
       const video = document.querySelector(".middle-video-visual");
       if (video) {
         gsap.fromTo(
@@ -63,7 +60,6 @@ const JasonLife = () => {
           invalidateOnRefresh: true,
         },
       });
-      // Animate the quote's inner span so its entrance animation stays separate.
       const right = sectionRef.current.querySelector(".jason-life-right");
       const quote = document.querySelector(".middle-video-quote-content");
       const storyContent = [right, quote].filter(Boolean);

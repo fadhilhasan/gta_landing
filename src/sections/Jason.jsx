@@ -31,7 +31,6 @@ const Jason = () => {
         duration: 1,
         ease: "power1.inOut",
       },
-      "<",
     );
   });
 

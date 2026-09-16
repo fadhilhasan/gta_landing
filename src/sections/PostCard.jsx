@@ -6,8 +6,6 @@ const PostCard = ({ onExplore }) => {
   const videoRef = useRef(null);
 
   useGSAP(() => {
-    // Crossfade a viewport-sized background instead of scrolling a colored
-    // rectangle past Lucia. Fade back out as the final video enters.
     gsap.timeline({
       scrollTrigger: {
         trigger: ".post-card",
@@ -30,22 +28,26 @@ const PostCard = ({ onExplore }) => {
       },
     });
 
-    videoRef.current.onloadedmetadata = () => {
+    const video = videoRef.current;
+    const setupVideo = () => {
       tl.to(
-        videoRef.current,
+        video,
         {
-          currentTime: videoRef.current.duration,
+          currentTime: video.duration,
           duration: 3,
           ease: "power1.inOut",
         },
         "<",
       );
     };
+    if (video.readyState >= 1) setupVideo();
+    else video.addEventListener("loadedmetadata", setupVideo, { once: true });
+    return () => video.removeEventListener("loadedmetadata", setupVideo);
   });
 
   return (
     <section className="post-card">
-      <div className="post-card-wrapper group hover:rotate-1 hover:-[1.02] transition duration-700">
+      <div className="post-card-wrapper group hover:rotate-1 transition duration-700">
         <img src="/images/overlay.webp" alt="overlay" />
 
         <video

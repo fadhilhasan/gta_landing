@@ -31,13 +31,12 @@ const Lucia = () => {
         duration: 1,
         ease: "power1.inOut",
       },
-      "<",
     );
   });
 
   return (
     <section className="lucia-life">
-      <div className="flex flex-col gap-5 items-end img-box lg:1/2 ps-10 md:ps-0 mt-96">
+      <div className="flex flex-col gap-5 items-end img-box ps-10 md:ps-0 mt-96">
         <div className="lucia-1">
           <img src="/images/lucia-1.webp" alt="Lucia 1" />
         </div>

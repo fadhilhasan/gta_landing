@@ -18,10 +18,10 @@ export default function Footer() {
         rel="noreferrer"
       >
         <strong className="md:text-lg">
-          <span className="footer-rockstar-icon text-2xl" aria-hidden="true" />{" "}
+          <span className="footer-rockstar-icon" aria-hidden="true" />{" "}
           GET ROCKSTAR PROPAGANDA
         </strong>
-        <span className="footer-newsletter-description md:text-md">
+        <span className="footer-newsletter-description">
           Discover the latest game announcements, events and updates from
           Rockstar Games.
         </span>

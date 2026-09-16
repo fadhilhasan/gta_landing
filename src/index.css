@@ -74,9 +74,6 @@ main::before {
   .col-center {
     @apply flex flex-col justify-center items-center;
   }
-  .abs-center {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
-  }
 }
 
 @layer components {
@@ -226,16 +223,7 @@ main::before {
       }
     }
   }
-  .lucia-content {
-    @apply flex justify-center items-center;
 
-    h1 {
-      @apply relative font-round-bold md:text-9xl text-6xl md:leading-28;
-    }
-    h2 {
-      @apply relative font-round-bold md:text-4xl text-xl max-w-md lg:mt-0 mt-10;
-    }
-  }
   .post-card {
     @apply relative flex justify-center items-center pb-80;
 
@@ -274,49 +262,15 @@ main::before {
   }
 }
 
-.black-gradient-bg {
-  background: linear-gradient(
-    223.17deg,
-    rgb(28, 24, 41) 0%,
-    rgb(27, 24, 40) 8.61%,
-    rgb(25, 23, 36) 17.21%,
-    rgb(22, 21, 32) 25.82%,
-    rgb(20, 19, 28) 34.42%,
-    rgb(18, 18, 24) 43.03%,
-    rgb(17, 17, 23) 51.63%
-  );
-}
-
 .entrance-message {
   mask-image: radial-gradient(circle at 50% 100vh, black 0%, transparent 0%);
   mask-repeat: no-repeat;
   mask-size: 100% 100%;
 }
 
-.lucia-content h1,
-.lucia-content h2 {
-  background-image: radial-gradient(
-    at 80% 40%,
-    rgb(252, 82, 67) 0%,
-    rgb(223, 58, 147) 50%,
-    transparent 100%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .mask-wrapper {
   mask-image: url("/images/big-hero-text.svg");
   mask-repeat: no-repeat;
-}
-
-.animated-gradient-bg {
-  background: linear-gradient(135deg, #1e2a52 0%, #6e4b91 100%);
-}
-
-.jon-content {
-  background: radial-gradient(ellipse, #111117 20%, transparent 70%);
 }
 
 .lucia-life-content {
@@ -522,13 +476,7 @@ main::before {
 .watch-more-info time {
   font-size: 15px;
 }
-.watch-more-external {
-  display: inline-block;
-  margin-top: 24px;
-  color: #b8b7f5;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
+
 @media (max-width: 767px) {
   .watch-more-grid {
     grid-template-columns: 1fr;
@@ -819,13 +767,7 @@ main::before {
   font-size: clamp(16px, 1.35vw, 26px);
   line-height: 1.35;
 }
-.keys-hint {
-  display: inline-flex;
-  gap: 20px;
-  margin-top: 28px;
-  color: #fff9cb;
-  font-size: 14px;
-}
+
 .keys-collage {
   display: grid;
   flex: none;
@@ -952,7 +894,6 @@ nav button {
 }
 .navigation-menu button:focus-visible,
 .navigation-menu a:focus-visible,
-.navigation-menu select:focus-visible,
 nav button:focus-visible {
   outline: 2px solid #fff9cb;
   outline-offset: 6px;
@@ -1062,21 +1003,7 @@ nav button:focus-visible {
 .navigation-featured {
   color: #fff9cb;
 }
-.navigation-settings {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: auto;
-  padding-top: 40px;
-  font-size: 16px;
-}
-.navigation-settings select {
-  margin-left: 8px;
-  background: #202038;
-  color: inherit;
-  border-radius: 4px;
-  padding: 4px;
-}
+
 @keyframes navigation-appear {
   from {
     opacity: 0;
@@ -1117,7 +1044,6 @@ nav button:focus-visible {
   }
 }
 
-/* Keep both images mounted so fast hover changes can crossfade without flashes. */
 .navigation-brand {
   overflow: hidden;
   isolation: isolate;
@@ -1185,7 +1111,6 @@ nav button:focus-visible {
   }
 }
 
-/* The dialog toggle overlays the header toggle at the same viewport position. */
 .navigation-menu {
   background: transparent;
   overflow-x: hidden;
@@ -1239,7 +1164,6 @@ nav button:focus-visible {
   }
 }
 
-/* Full viewport surface stays behind the sliding panel, including during entry. */
 .navigation-surface {
   position: absolute;
   inset: 0;
@@ -1259,7 +1183,6 @@ nav button:focus-visible {
   z-index: 2;
 }
 
-/* Outro typography is independent of the shared Coming Soon heading. */
 .outro-content .outro-title {
   font-size: clamp(48px, 8.5vw, 164px);
   line-height: 0.96;
@@ -1274,14 +1197,12 @@ nav button:focus-visible {
   padding: 32px 24px 72px;
   color: #bfb5dd;
   text-align: center;
-  /* Share the fixed outro backdrop, including its fade opacity. */
   background: transparent;
 }
 .footer-newsletter {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  /* gap: 32px; */
   max-width: 850px;
   margin: 0 auto 44px;
   padding: 26px 0px;
@@ -1476,7 +1397,6 @@ nav button:focus-visible {
   }
 }
 
-/* Startup overlay stays above the page while its initial assets decode. */
 .startup-loader {
   position: fixed;
   inset: 0;

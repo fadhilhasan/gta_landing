@@ -24,14 +24,16 @@ const MiddleVideo = () => {
         const index = Math.round(playhead.frame);
         let image = frames[index];
         if (!image?.naturalWidth) {
-          image = frames.reduce((nearest, candidate, candidateIndex) => {
-            if (!candidate.complete || !candidate.naturalWidth) return nearest;
-            return !nearest ||
-              Math.abs(candidateIndex - index) <
-                Math.abs(frames.indexOf(nearest) - index)
-              ? candidate
-              : nearest;
-          }, null);
+          let nearestDistance = Infinity;
+          for (let candidateIndex = 0; candidateIndex < frames.length; candidateIndex++) {
+            const candidate = frames[candidateIndex];
+            if (!candidate.complete || !candidate.naturalWidth) continue;
+            const distance = Math.abs(candidateIndex - index);
+            if (distance < nearestDistance) {
+              image = candidate;
+              nearestDistance = distance;
+            }
+          }
         }
         if (!image?.complete || !image.naturalWidth) return;
         const width = canvas.clientWidth;
@@ -99,14 +101,15 @@ const MiddleVideo = () => {
           },
           0,
         )
-        .fromTo(".middle-video-quote",
+        .fromTo(
+          ".middle-video-quote",
           { autoAlpha: 0, y: 100 },
           { autoAlpha: 1, y: 0, duration: 0.25, ease: "power1.out" },
           0.75,
         )
         .addLabel("quoteSettled", 1)
-        // Keep the video and quote still for a short stretch of scrolling.
-        .to(".middle-video-visual",
+        .to(
+          ".middle-video-visual",
           { scale: 1, duration: 0.35, ease: "none" },
           "quoteSettled+=0.25",
         );
@@ -139,7 +142,9 @@ const MiddleVideo = () => {
       </div>
       <blockquote className="middle-video-quote">
         <span className="middle-video-quote-content block">
-          “If anything happens,<br />I'm right behind you.”
+          “If anything happens,
+          <br />
+          I'm right behind you.”
         </span>
       </blockquote>
     </section>

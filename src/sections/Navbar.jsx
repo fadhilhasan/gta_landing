@@ -36,18 +36,56 @@ function NavigationMenu({ onClose }) {
     let closing = false;
     let destination;
     const context = gsap.context(() => {
-      timeline = gsap.timeline({ onReverseComplete: () => onClose(destination) });
+      timeline = gsap.timeline({
+        onReverseComplete: () => onClose(destination),
+      });
       timeline
-        .fromTo(".navigation-panel", { xPercent: 100 },
-          { xPercent: 0, duration: reduced ? 0 : 0.65, ease: "power3.inOut" }, 0)
-        .fromTo(".navigation-brand", { opacity: 0 },
-          { opacity: 1, duration: reduced ? 0 : 0.5 }, 0)
-        .fromTo(".navigation-mark", { opacity: 0, filter: "blur(16px)" },
-          { opacity: 1, filter: "blur(0px)", duration: reduced ? 0 : 0.7 }, reduced ? 0 : 0.15)
-        .fromTo(".navigation-toggle-line:first-child", { y: -5, rotation: 0 },
-          { y: 0, rotation: 45, duration: reduced ? 0 : 0.35 }, 0)
-        .fromTo(".navigation-toggle-line:last-child", { y: 5, rotation: 0 },
-          { y: 0, rotation: -45, duration: reduced ? 0 : 0.35 }, 0);
+        .fromTo(
+          ".navigation-surface",
+          {
+            opacity: 0,
+            backdropFilter: "blur(0px)",
+            webkitBackdropFilter: "blur(0px)",
+          },
+          {
+            opacity: 1,
+            backdropFilter: "blur(2rem)",
+            webkitBackdropFilter: "blur(2rem)",
+            duration: reduced ? 0 : 0.5,
+            ease: "power2.out",
+          },
+          0,
+        )
+        .fromTo(
+          ".navigation-panel",
+          { xPercent: 100 },
+          { xPercent: 0, duration: reduced ? 0 : 0.65, ease: "power3.inOut" },
+          0,
+        )
+        .fromTo(
+          ".navigation-brand",
+          { opacity: 0 },
+          { opacity: 1, duration: reduced ? 0 : 0.5 },
+          0,
+        )
+        .fromTo(
+          ".navigation-mark",
+          { opacity: 0, filter: "blur(16px)" },
+          { opacity: 1, filter: "blur(0px)", duration: reduced ? 0 : 0.7 },
+          reduced ? 0 : 0.15,
+        )
+        .fromTo(
+          ".navigation-toggle-line:first-child",
+          { y: -5, rotation: 0 },
+          { y: 0, rotation: 45, duration: reduced ? 0 : 0.35 },
+          0,
+        )
+        .fromTo(
+          ".navigation-toggle-line:last-child",
+          { y: 5, rotation: 0 },
+          { y: 0, rotation: -45, duration: reduced ? 0 : 0.35 },
+          0,
+        );
     }, element);
     close.current = (target) => {
       if (closing) return;
@@ -63,14 +101,13 @@ function NavigationMenu({ onClose }) {
       document.documentElement.style.overflow = overflow;
       previousFocus?.focus({ preventScroll: true });
     };
-    // Capture the preferences once for this opening; changing them applies next time.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return createPortal(
     <dialog
       ref={dialog}
-      className="navigation-menu" data-motion={motion ? "on" : "off"}
+      className="navigation-menu"
+      data-motion={motion ? "on" : "off"}
       aria-label="Main navigation"
       data-lenis-prevent
       onCancel={(event) => {
@@ -78,20 +115,35 @@ function NavigationMenu({ onClose }) {
         close.current();
       }}
     >
-      <button className="navigation-close navigation-toggle" onClick={() => close.current()} aria-label="Close navigation">
-        <span className="navigation-toggle-line" /><span className="navigation-toggle-line" />
+      <div className="navigation-surface" aria-hidden="true" />
+      <button
+        className="navigation-close navigation-toggle"
+        onClick={() => close.current()}
+        aria-label="Close navigation"
+      >
+        <span className="navigation-toggle-line" />
+        <span className="navigation-toggle-line" />
       </button>
       <div className="navigation-brand" data-preview={Boolean(preview)}>
         <div className="navigation-previews" aria-hidden="true">
           {previews.map(({ id, src, position }) => (
-            <div key={id} className="navigation-preview" data-active={preview === id}>
-              <img src={src} alt="" style={{ objectPosition: position }} decoding="async" />
+            <div
+              key={id}
+              className="navigation-preview"
+              data-active={preview === id}
+            >
+              <img
+                src={src}
+                alt=""
+                style={{ objectPosition: position }}
+                decoding="async"
+              />
             </div>
           ))}
         </div>
         <img
           className="navigation-mark"
-          src="/images/mask.svg"
+          src="/images/logo.webp"
           alt="Grand Theft Auto VI"
         />
         <div className="navigation-release">
@@ -118,7 +170,9 @@ function NavigationMenu({ onClose }) {
         <header className="navigation-heading">
           <button
             onClick={() =>
-              page === "root" ? close.current() : (setPage("root"), setPreview(null))
+              page === "root"
+                ? close.current()
+                : (setPage("root"), setPreview(null))
             }
             aria-label={page === "root" ? "Back to page" : "Back to main menu"}
           >
@@ -138,21 +192,43 @@ function NavigationMenu({ onClose }) {
             <>
               <button
                 className="navigation-featured"
-                onMouseEnter={() => setPreview(null)} onFocus={() => setPreview(null)}
+                onMouseEnter={() => setPreview(null)}
+                onFocus={() => setPreview(null)}
                 onClick={() => close.current(0)}
               >
                 Explore All
               </button>
-              <button onClick={() => { setPage("people"); setPreview(null); }}>
+              <button
+                onClick={() => {
+                  setPage("people");
+                  setPreview(null);
+                }}
+              >
                 People <span>›</span>
               </button>
-              <button onClick={() => { setPage("places"); setPreview(null); }}>
+              <button
+                onClick={() => {
+                  setPage("places");
+                  setPreview(null);
+                }}
+              >
                 Places <span>›</span>
               </button>
             </>
           ) : (
             menus[page].map(({ label, target, preview: image }) => (
-              <button key={target} data-selected={preview === image} onMouseEnter={() => setPreview(image)} onFocus={() => setPreview(image)} onClick={() => close.current(target)}>
+              <button
+                key={target}
+                data-selected={preview === image}
+                onMouseEnter={() => setPreview(image)}
+                onMouseLeave={() => setPreview(null)}
+                onFocus={(event) => {
+                  if (event.currentTarget.matches(":focus-visible"))
+                    setPreview(image);
+                }}
+                onBlur={() => setPreview(null)}
+                onClick={() => close.current(target)}
+              >
                 {label}
                 <span>↗</span>
               </button>
@@ -178,7 +254,8 @@ export default function Navbar({ open, onOpen, onClose }) {
           aria-label="Open navigation"
           aria-expanded={open}
         >
-          <span className="navigation-toggle-line" /><span className="navigation-toggle-line" />
+          <span className="navigation-toggle-line" />
+          <span className="navigation-toggle-line" />
         </button>
       </nav>
       {open && <NavigationMenu onClose={onClose} />}

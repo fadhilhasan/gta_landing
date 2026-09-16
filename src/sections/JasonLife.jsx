@@ -4,18 +4,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
 const Photo = ({ src, alt, className }) => (
-  <a
-    className={`jason-life-photo ${className}`}
-    href={src}
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label={`View full image: ${alt}`}
-  >
+  <div className={`jason-life-photo ${className}`}>
     <img src={src} alt={alt} loading="lazy" width="3840" height="2160" />
-    <span className="jason-photo-expand" aria-hidden="true">
-      ⤢
-    </span>
-  </a>
+  </div>
 );
 
 const JasonLife = () => {

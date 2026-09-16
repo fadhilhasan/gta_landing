@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Loader from "./sections/Loader";
 import TrailerModal from "./sections/TrailerModal";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
@@ -21,6 +22,7 @@ gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const pendingNavigation = useRef(null);
   const [trailerOpen, setTrailerOpen] = useState(false);
@@ -52,7 +54,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (trailerOpen || explorerOpen || menuOpen) lenisRef.current?.stop();
+    if (loading || trailerOpen || explorerOpen || menuOpen) lenisRef.current?.stop();
     else {
       lenisRef.current?.start();
       if (pendingNavigation.current !== null) {
@@ -60,10 +62,12 @@ const App = () => {
         pendingNavigation.current = null;
       }
     }
-  }, [trailerOpen, explorerOpen, menuOpen]);
+  }, [loading, trailerOpen, explorerOpen, menuOpen]);
 
   return (
-    <main>
+    <>
+    {loading && <Loader onComplete={setLoading} />}
+    <main inert={loading} aria-busy={loading}>
       <Navbar open={menuOpen} onOpen={() => setMenuOpen(true)} onClose={(target) => {
         pendingNavigation.current = target ?? null;
         setMenuOpen(false);
@@ -81,6 +85,7 @@ const App = () => {
       {trailerOpen && <TrailerModal onClose={() => setTrailerOpen(false)} />}
       {explorerOpen && <LeonidaExplorer onClose={() => setExplorerOpen(false)} />}
     </main>
+    </>
   );
 };
 

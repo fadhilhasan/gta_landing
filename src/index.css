@@ -1543,11 +1543,37 @@ nav button:focus-visible {
     height: 100svh;
   }
   .hero-section .mask-wrapper {
-    mask-position: 65% 47%;
-    mask-size: 3100% 3100%;
+    mask-position: calc(50vw - 2571.4286vw) calc(50svh - 1285.7143vw);
+    mask-size: 4000vw 2678.5714vw;
   }
   .hero-section .trailer-logo {
     bottom: max(12px, env(safe-area-inset-bottom));
     width: clamp(120px, 36vw, 160px);
+  }
+}
+
+@media (max-width: 767px) {
+  .post-card {
+    padding-bottom: clamp(96px, 20svh, 180px);
+  }
+  .post-card .post-card-wrapper {
+    height: auto;
+    aspect-ratio: 1.5;
+    margin-inline: 20px;
+    scale: 1;
+  }
+  .post-card .post-card-wrapper video {
+    position: absolute;
+    inset: 0;
+  }
+  .post-card .post-card-wrapper button {
+    width: max-content;
+    max-width: calc(100% - 32px);
+    min-height: 44px;
+    bottom: 18%;
+    padding: 10px 16px;
+    font-size: clamp(12px, 3.3vw, 15px);
+    line-height: 1.2;
+    white-space: nowrap;
   }
 }

@@ -1,3 +1,4 @@
+import { attachScrollVideo } from "../utils/scrollVideo";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
@@ -28,21 +29,7 @@ const PostCard = ({ onExplore }) => {
       },
     });
 
-    const video = videoRef.current;
-    const setupVideo = () => {
-      tl.to(
-        video,
-        {
-          currentTime: video.duration,
-          duration: 3,
-          ease: "power1.inOut",
-        },
-        "<",
-      );
-    };
-    if (video.readyState >= 1) setupVideo();
-    else video.addEventListener("loadedmetadata", setupVideo, { once: true });
-    return () => video.removeEventListener("loadedmetadata", setupVideo);
+    return attachScrollVideo(videoRef.current, tl, { duration: 3, ease: "power1.inOut" });
   });
 
   return (
@@ -52,6 +39,7 @@ const PostCard = ({ onExplore }) => {
 
         <video
           ref={videoRef}
+          poster="/images/video-posters/postcard.webp"
           muted
           playsInline
           preload="auto"

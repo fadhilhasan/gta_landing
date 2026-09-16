@@ -1577,3 +1577,29 @@ nav button:focus-visible {
     white-space: nowrap;
   }
 }
+
+@media (max-width: 1024px) {
+  .hero-section .fake-logo-wrapper {
+    top: clamp(96px, 20svh, 176px);
+    width: min(64vw, 280px);
+  }
+  .hero-section .overlay-logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 224 / 150;
+    object-fit: contain;
+  }
+}
+
+.hero-mobile-fill {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+@media (max-width: 1024px) {
+  .hero-section .mask-wrapper {
+    position: relative;
+    mask-image: none;
+  }
+}

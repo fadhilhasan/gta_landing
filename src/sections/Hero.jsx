@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 const Hero = ({ onOpenTrailer }) => {
   const buttonRef = useRef(null);
-  const { initialMaskPos, initialMaskSize, maskPos, maskSize } =
+  const { compact, initialMaskPos, initialMaskSize, maskPos, maskSize } =
     useMaskSettings();
 
   const animateHover = (isHovered) => {
@@ -25,10 +25,37 @@ const Hero = ({ onOpenTrailer }) => {
 
   useGSAP(
     () => {
-      gsap.set(".mask-wrapper", {
-        maskPosition: initialMaskPos,
-        maskSize: initialMaskSize,
-      });
+      const wrapper = document.querySelector(".mask-wrapper");
+      const destination = document.querySelector(".overlay-logo");
+      const initialGeometry = () => {
+        const width = Math.max(wrapper.clientWidth * 40, wrapper.clientHeight * 16);
+        const height = width * 150 / 224;
+        const bounds = wrapper.getBoundingClientRect();
+        const logo = destination.getBoundingClientRect();
+        const centerX = logo.left - bounds.left + logo.width / 2;
+        const centerY = logo.top - bounds.top + logo.width * 150 / 224 / 2;
+        return {
+          position: `${centerX - width / 2}px ${centerY - height / 2}px`,
+          size: `${width}px ${height}px`,
+        };
+      };
+      const targetGeometry = () => {
+        const bounds = wrapper.getBoundingClientRect();
+        const logo = destination.getBoundingClientRect();
+        return {
+          position: `${logo.left - bounds.left}px ${logo.top - bounds.top}px`,
+          size: `${logo.width}px ${logo.width * 150 / 224}px`,
+        };
+      };
+      const startMask = {
+        maskPosition: compact ? () => initialGeometry().position : initialMaskPos,
+        maskSize: compact ? () => initialGeometry().size : initialMaskSize,
+      };
+      gsap.set(wrapper, startMask);
+      if (compact) {
+        gsap.set(wrapper, { maskImage: "none" });
+        gsap.set(".hero-mobile-fill", { opacity: 1 });
+      }
 
       gsap.set(".mask-logo", {
         marginTop: "-100vh",
@@ -57,16 +84,21 @@ const Hero = ({ onOpenTrailer }) => {
         },
       });
 
+      if (compact) {
+        tl.set(wrapper, { maskImage: 'url("/images/big-hero-text.svg")' }, 0.5);
+        tl.to(".hero-mobile-fill", { opacity: 0, duration: 0.3, ease: "power1.inOut" }, 1.1);
+      }
       tl.to(".fade-out", {
         autoAlpha: 0,
         ease: "power1.inOut",
-      })
-        .to(".scale-out", { scale: 1, ease: "power1.inOut" })
-        .to(
-          ".mask-wrapper",
+      }, 0)
+        .to(".scale-out", { scale: 1, ease: "power1.inOut" }, 0.5)
+        .fromTo(
+          wrapper,
+          startMask,
           {
-            maskPosition: maskPos,
-            maskSize,
+            maskPosition: compact ? () => targetGeometry().position : maskPos,
+            maskSize: compact ? () => targetGeometry().size : maskSize,
             duration: 1,
             ease: "power1.inOut",
           },
@@ -137,13 +169,18 @@ const Hero = ({ onOpenTrailer }) => {
       }
     },
     {
-      dependencies: [initialMaskPos, initialMaskSize, maskPos, maskSize],
+      dependencies: [compact, initialMaskPos, initialMaskSize, maskPos, maskSize],
       revertOnUpdate: true,
     },
   );
 
   return (
     <section className="hero-section">
+      {compact && (
+        <div className="hero-mobile-fill" aria-hidden="true">
+          <img src="/images/hero-bg.webp" alt="" className="scale-out" />
+        </div>
+      )}
       <div className="size-full mask-wrapper">
         <img
           src="/images/hero-bg.webp"

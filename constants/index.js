@@ -6,19 +6,13 @@ export const useMaskSettings = () => {
 
   if (isMobile) {
     return {
-      initialMaskPos: "calc(50vw - 2571.4286vw) calc(50svh - 1285.7143vw)",
-      initialMaskSize: "4000vw 2678.5714vw",
-      maskPos: "50% 7vh",
-      maskSize: "50% 50%",
+      compact: true,
     };
   }
 
   if (isTablet) {
     return {
-      initialMaskPos: "calc(50vw - 2571.4286vw) calc(50svh - 1285.7143vw)",
-      initialMaskSize: "4000vw 2678.5714vw",
-      maskPos: "50% 17vh",
-      maskSize: "30% 30%",
+      compact: true,
     };
   }
 

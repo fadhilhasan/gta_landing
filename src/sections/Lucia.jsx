@@ -36,7 +36,7 @@ const Lucia = () => {
 
   return (
     <section className="lucia-life">
-      <div className="flex flex-col gap-5 items-end img-box ps-10 md:ps-0 mt-96">
+      <div className="flex flex-col gap-5 items-end img-box mt-96">
         <div className="lucia-1">
           <img src="/images/lucia-1.webp" alt="Lucia 1" />
         </div>
@@ -46,8 +46,8 @@ const Lucia = () => {
         </div>
       </div>
 
-      <div className="lg:w-1/2 lucia-life-content">
-        <div className="max-w-xl ps-10">
+      <div className="lucia-life-content">
+        <div className="lucia-copy">
           <h1>Lucia Caminos</h1>
           <h2>Lucia's father taught her to fight as soon as she could walk</h2>
           <p>
@@ -61,7 +61,7 @@ const Lucia = () => {
           <img src="/images/lucia-2.webp" alt="Lucia Caminos" />
         </div>
 
-        <p className="max-w-xl ps-10">
+        <p className="lucia-copy">
           More than anything, Lucia wants the good life her mom has dreamed of
           since their days in Liberty City — but instead of half-baked
           fantasies, Lucia is prepared to take matters into her own hands.

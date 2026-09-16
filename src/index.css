@@ -150,16 +150,40 @@ main::before {
     }
   }
   .jason {
-    @apply relative z-10 lg:ps-40 2xl:ps-80 ps-10 py-40 mt-60 flex lg:flex-row flex-col justify-between gap-5 w-dvw overflow-x-hidden;
+    @apply relative z-10 py-40 mt-60 w-full;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(32px, 5vw, 96px);
+    padding-inline: clamp(24px, 10vw, 320px) 24px;
+
+    .jason-content,
+    .img-box {
+      min-width: 0;
+    }
+    .jason-content {
+      width: 100%;
+      max-width: 560px;
+    }
+    img {
+      display: block;
+      width: 100%;
+    }
 
     h1 {
-      @apply text-yellow font-long uppercase text-8xl mb-20;
+      @apply text-yellow font-long uppercase;
+      font-size: clamp(56px, 5.5vw, 96px);
+      line-height: 1;
+      margin-bottom: clamp(32px, 4vw, 72px);
     }
     h2 {
-      @apply text-pink md:text-5xl text-3xl mb-7 md:pe-20 pe-10;
+      @apply text-pink mb-7;
+      font-size: clamp(28px, 2.6vw, 48px);
+      line-height: 1.15;
     }
     p {
-      @apply text-white md:text-2xl text-lg md:pe-28 pe-14;
+      @apply text-white;
+      font-size: clamp(18px, 1.6vw, 30px);
+      line-height: 1.35;
     }
     .jason-1 {
       @apply bg-yellow lg:h-[80vh] w-auto -translate-x-5;
@@ -187,22 +211,42 @@ main::before {
     @apply relative;
   }
   .lucia-life {
-    @apply relative z-10 py-40 mt-60 flex lg:flex-row flex-col justify-between gap-5 w-dvw overflow-x-hidden;
+    @apply relative z-10 py-40 mt-60 w-full;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(32px, 5vw, 96px);
+    padding-inline: 24px clamp(24px, 10vw, 320px);
 
+    .img-box,
+    .lucia-life-content {
+      min-width: 0;
+      width: 100%;
+    }
+    .lucia-life-content {
+      max-width: 560px;
+    }
+    img {
+      display: block;
+      width: 100%;
+    }
     h1 {
-      @apply text-yellow font-long uppercase text-8xl mb-20;
+      @apply text-yellow font-long uppercase;
+      font-size: clamp(56px, 5.5vw, 96px);
+      line-height: 1;
+      margin-bottom: clamp(32px, 4vw, 72px);
     }
     h2 {
-      @apply text-pink md:text-5xl text-3xl mb-7 md:pe-20 pe-10;
+      @apply text-pink mb-7;
+      font-size: clamp(28px, 2.6vw, 48px);
+      line-height: 1.15;
     }
     p {
-      @apply text-white md:text-2xl text-lg md:pe-28 pe-14;
-    }
-    p:last-of-type {
-      @apply md:hidden block xl:block;
+      @apply text-white;
+      font-size: clamp(18px, 1.6vw, 30px);
+      line-height: 1.35;
     }
     .lucia-1 {
-      @apply bg-yellow lg:h-[80vh] w-auto -translate-x-5;
+      @apply bg-yellow lg:h-[80vh] w-full -translate-x-5;
 
       img {
         @apply size-full object-cover [object-position:85%_center] hover:scale-[0.98] transition duration-700 ease-in-out;
@@ -1184,12 +1228,20 @@ nav button:focus-visible {
 }
 
 .outro-content .outro-title {
-  font-size: clamp(48px, 8.5vw, 164px);
+  font-size: clamp(48px, min(8.5vw, 13vh), 164px);
   line-height: 0.96;
   letter-spacing: -0.035em;
 }
 .outro-content {
   padding-inline: 20px;
+  gap: clamp(16px, 3vh, 40px);
+}
+.outro-logo {
+  width: clamp(120px, min(22vw, 24vh), 288px);
+  flex-shrink: 0;
+}
+.outro-content > * {
+  flex-shrink: 0;
 }
 .outro-footer {
   position: relative;
@@ -1460,5 +1512,42 @@ nav button:focus-visible {
     stroke-dasharray: none;
     stroke-dashoffset: 0;
     opacity: 0.5;
+  }
+}
+
+@media (max-width: 1023px) {
+  .jason,
+  .lucia-life {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: 24px;
+  }
+  .jason .jason-content,
+  .lucia-life .lucia-life-content {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  .jason .jason-1,
+  .jason .jason-2,
+  .jason .jason-3,
+  .lucia-life .lucia-1,
+  .lucia-life .lucia-2,
+  .lucia-life .lucia-3 {
+    translate: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-section,
+  .hero-section .entrance-message,
+  .hero-section .text-reveal {
+    height: 100svh;
+  }
+  .hero-section .mask-wrapper {
+    mask-position: 65% 47%;
+    mask-size: 3100% 3100%;
+  }
+  .hero-section .trailer-logo {
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: clamp(120px, 36vw, 160px);
   }
 }

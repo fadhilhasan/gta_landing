@@ -1,3 +1,4 @@
+import { attachScrollVideo } from "../utils/scrollVideo";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
@@ -23,21 +24,7 @@ const SecondVideo = () => {
 
     tl.to(".lucia", { opacity: 1, duration: 1, ease: "power1.inOut" });
 
-    const video = videoRef.current;
-    const setupVideo = () => {
-      tl.to(
-        video,
-        {
-          currentTime: video.duration,
-          duration: 2,
-          ease: "power1.inOut",
-        },
-        "<",
-      );
-    };
-    if (video.readyState >= 1) setupVideo();
-    else video.addEventListener("loadedmetadata", setupVideo, { once: true });
-    return () => video.removeEventListener("loadedmetadata", setupVideo);
+    return attachScrollVideo(videoRef.current, tl, { duration: 2, ease: "power1.inOut" });
   });
 
   return (
@@ -45,6 +32,7 @@ const SecondVideo = () => {
       <div className="h-dvh">
         <video
           ref={videoRef}
+          poster="/images/video-posters/second.webp"
           src="/videos/output2-1.mp4"
           muted
           playsInline

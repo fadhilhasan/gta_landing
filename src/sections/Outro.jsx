@@ -74,13 +74,27 @@ const Outro = () => {
     }
     const setOverlayY = gsap.quickSetter(overlay, "y", "px");
     const footer = document.querySelector(".outro-footer");
-    const platforms = document.querySelector(".outro-content").lastElementChild;
+    const content = document.querySelector(".outro-content");
+    const fit = document.querySelector(".outro-fit");
+    const logo = content.firstElementChild;
+    const platforms = content.lastElementChild;
+    const setFitScale = gsap.quickSetter(fit, "scale");
+    gsap.set(fit, { scale: 1, transformOrigin: "50% 50%" });
     const followFooter = () => {
       const currentY = Number(gsap.getProperty(overlay, "y")) || 0;
-      const artworkBottom = platforms.getBoundingClientRect().bottom - currentY;
-      const gap = window.innerWidth < 768 ? 28 : 48;
-      const availableBottom = footer.getBoundingClientRect().top - gap;
-      setOverlayY(Math.min(0, availableBottom - artworkBottom));
+      const currentScale = Number(gsap.getProperty(fit, "scale")) || 1;
+      const center = overlay.clientHeight / 2;
+      const artworkTop = center + (logo.getBoundingClientRect().top - currentY - center) / currentScale;
+      const artworkBottom = center + (platforms.getBoundingClientRect().bottom - currentY - center) / currentScale;
+      const artworkHeight = artworkBottom - artworkTop;
+      if (artworkHeight <= 0) return;
+      const gap = window.innerWidth < 768 ? 24 : 36;
+      const safeTop = 24;
+      const availableBottom = Math.min(overlay.clientHeight - 24, footer.getBoundingClientRect().top - gap);
+      const scale = Math.min(1, Math.max(0.05, (availableBottom - safeTop) / artworkHeight));
+      const fittedBottom = center + (artworkBottom - center) * scale;
+      setFitScale(scale);
+      setOverlayY(Math.min(0, availableBottom - fittedBottom));
     };
     ScrollTrigger.create({
       trigger: ".outro-footer",
@@ -96,6 +110,7 @@ const Outro = () => {
     });
 
     const tl = gsap.timeline({
+      onUpdate: followFooter,
       scrollTrigger: {
         trigger: ".final-message",
         start: "top top",
@@ -144,8 +159,9 @@ const Outro = () => {
       <div className="outro-backdrop" aria-hidden="true" />
       <div className="outro-cursor-glow" aria-hidden="true" />
       <div className="outro-overlay">
-      <div className="outro-content h-full col-center gap-10">
-        <img src="/images/logo.webp" alt="logo" className="md:w-72 w-52" />
+      <div className="outro-fit h-full">
+      <div className="outro-content h-full col-center">
+        <img src="/images/logo.webp" alt="Grand Theft Auto VI" className="outro-logo" />
 
         <div>
           <h3 className="gradient-title outro-title">
@@ -161,6 +177,7 @@ const Outro = () => {
           />
           <img src="/images/x-logo.svg" alt="x logo" className="md:w-52 w-40" />
         </div>
+      </div>
       </div>
       </div>
       </div>

@@ -36,7 +36,7 @@ const Jason = () => {
 
   return (
     <section className="jason">
-      <div className="max-w-lg jason-content">
+      <div className="jason-content">
         <h1>Jason Duval</h1>
         <h2>Jason wants an easy life, but things just keep getting harder.</h2>
         <p>
